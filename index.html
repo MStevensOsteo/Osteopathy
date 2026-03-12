@@ -137,8 +137,8 @@
       justify-content: space-between;
       align-items: center;
       background: rgba(253, 250, 246, 0.88);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      /*backdrop-filter: blur(12px);*/
+      /*-webkit-backdrop-filter: blur(12px);*/
       border-bottom: 1px solid var(--color-border);
       transition: var(--transition);
     }
@@ -810,16 +810,73 @@
       letter-spacing: 12px;
     }
   </style>
-<style id="__webby-nav-styles">/* ─── Navigation ─── */
+<style id="__webby-nav-styles">/* ─── CSS Custom Properties ─── */
+:root {
+  --color-cream:       #F7F3EE;
+  --color-warm-white:  #FDFAF6;
+  --color-sage:        #8A9E8B;
+  --color-sage-light:  #C4D2C5;
+  --color-sage-pale:   #E8EFE8;
+  --color-lilac:       #B8A8C8;
+  --color-lilac-pale:  #EDE6F5;
+  --color-lilac-mid:   #9B87B0;
+  --color-charcoal:    #3A3530;
+  --color-stone:       #6B6258;
+  --color-stone-light: #9C9289;
+  --color-border:      #DDD5CB;
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'DM Sans', sans-serif;
+
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  2rem;
+  --space-lg:  4rem;
+  --space-xl:  7rem;
+  --space-2xl: 11rem;
+
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+
+  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --max-width: 1200px;
+}
+
+/* ─── Reset & Base relevant to Nav ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-warm-white);
+  color: var(--color-charcoal);
+  line-height: 1.7;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ─── Layout Utilities relevant to Nav ─── */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+/* ─── Navigation ─── */
 nav {
   position: fixed;
-  top: 0;
+  top: 44px; /* Moved from inline style in HTML, assuming for desktop */
   left: 0;
   right: 0;
   z-index: 100; /* Main nav layer */
   background: rgba(253, 250, 246, 0.95); /* More opaque background for fixed nav */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  /*backdrop-filter: blur(12px);*/
+  /*-webkit-backdrop-filter: blur(12px);*/
   border-bottom: 1px solid var(--color-border);
   transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
   box-shadow: 0 2px 24px rgba(58, 53, 48, 0.04); /* Subtle shadow always present */
@@ -854,7 +911,7 @@ nav {
 
 /* Hamburger toggle button (mobile-only by default) */
 .nav-toggle {
-  display: flex;
+  display: block;
   flex-direction: column;
   justify-content: space-around;
   width: 30px;
@@ -908,6 +965,8 @@ nav.nav-open .nav-toggle span:nth-child(3) {
   visibility: hidden; /* Hidden by default for smooth transition */
   opacity: 0;
   transition: opacity var(--transition), visibility var(--transition);
+  overflow-y: auto; /* Allow scrolling if content exceeds viewport */
+  -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
 }
 
 nav.nav-open .nav-menu {
@@ -942,25 +1001,28 @@ nav.nav-open .nav-menu {
   color: var(--color-lilac-mid);
 }
 
-/* CTA button within the mobile menu */
+/* CTA button, now a sibling of nav-links for better control */
 .nav-cta {
   background: var(--color-charcoal);
-  color: var(--color-cream) !important;
+  color: var(--color-cream);
   padding: 0.8rem 2rem; /* Adjusted padding for mobile CTA */
   border-radius: 100px;
-  font-size: 0.9rem !important; /* Adjusted font size for mobile CTA */
+  font-size: 0.9rem; /* Adjusted font size for mobile CTA */
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  transition: background 0.3s !important, color 0.3s !important;
+  border: none; /* Ensure no default button border */
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
   display: inline-block; /* Allows padding to apply correctly */
   outline-offset: 4px; /* For accessibility */
+  text-decoration: none; /* Ensure no underline from base 'a' styles */
 }
 
 .nav-cta:hover,
 .nav-cta:focus {
-  background: var(--color-lilac-mid) !important;
-  color: #fff !important; /* Specific white color for hover */
+  background: var(--color-lilac-mid);
+  color: #fff; /* Specific white color for hover */
 }
 
 /* Desktop Styles */
@@ -978,6 +1040,7 @@ nav.nav-open .nav-menu {
     flex-direction: row; /* Horizontal layout for desktop */
     gap: var(--space-md); /* Space between elements in desktop nav (links and CTA) */
     margin-left: auto; /* Push nav-menu to the right */
+    overflow-y: visible; /* Prevent scrolling on desktop */
   }
 
   .nav-links {
@@ -988,20 +1051,39 @@ nav.nav-open .nav-menu {
 
   .nav-links a {
     font-size: 0.82rem; /* Revert to smaller desktop font size */
-    font-weight: 400;
+    font-weight: 400; /* Revert to desktop font weight */
     color: var(--color-stone); /* Revert to desktop color */
     padding: 0; /* Remove extra padding from mobile */
   }
 
   .nav-cta {
     padding: 0.55rem 1.4rem; /* Revert to original desktop padding */
-    font-size: 0.78rem !important; /* Revert to original desktop font size */
+    font-size: 0.78rem; /* Revert to original desktop font size */
+    font-weight: 500; /* Keep font weight for desktop CTA */
+    color: var(--color-cream); /* Explicitly set desktop color */
+    background: var(--color-charcoal); /* Explicitly set desktop background */
   }
-}</style></head>
+
+  .nav-cta:hover, .nav-cta:focus {
+    background: var(--color-lilac-mid);
+    color: #fff;
+  }
+}
+
+/* Mobile Responsive Adjustments (less than 768px) */
+@media (max-width: 767px) {
+  nav {
+    top: 0; /* Nav fixed to top of screen on mobile */
+    padding: var(--space-sm) var(--space-md); /* Add horizontal padding for mobile nav bar */
+  }
+  .nav-inner {
+    padding: 0; /* Remove extra padding from inner container on mobile, as nav itself provides it */
+  }
+}</style><meta name="keywords" content="Osteopathy, Osteopathic Practitioner, Concussion, Kelwona, Neuro-affirming"></head>
 <body style="">
 
   <!-- ─── Navigation ─── -->
-  <nav id="main-nav" aria-label="Main navigation" style="box-shadow: none;">
+  <nav id="main-nav" aria-label="Main navigation" style="" class="">
   <div class="nav-inner container">
     <a href="#hero" class="nav-logo">Michelle <span>Stevens</span></a>
     <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -1014,15 +1096,14 @@ nav.nav-open .nav-menu {
         <li><a href="#services">Services</a></li>
         <li><a href="#testimonials">Testimonials</a></li>
         <li><a href="#contact-form" class="nav-cta">Book a Session</a></li>
-      </ul>
-    </div>
+    </ul></div>
   </div>
   <script>
     (function() {
       const nav = document.getElementById('main-nav');
       const navToggle = nav.querySelector('.nav-toggle');
       const navMenu = nav.querySelector('.nav-menu');
-      const navLinks = nav.querySelectorAll('.nav-links a');
+      const navLinks = nav.querySelectorAll('.nav-links a, .nav-cta'); // Include nav-cta for closing
       const breakpoint = 768; // Needs to match CSS media query
 
       function toggleMenu() {
@@ -1043,7 +1124,7 @@ nav.nav-open .nav-menu {
       // Toggle menu on hamburger click
       navToggle.addEventListener('click', toggleMenu);
 
-      // Close menu when a navigation link is clicked
+      // Close menu when a navigation link or CTA is clicked
       navLinks.forEach(link => {
         link.addEventListener('click', closeMenu);
       });
@@ -1073,7 +1154,7 @@ nav.nav-open .nav-menu {
         <span class="hero-eyebrow" data-editable="">Osteopathic Practice — Kelowna, B.C.</span>
         <h1 class="hero-title" data-editable="">
           Michelle <em>Stevens&nbsp;</em></h1>
-        <p class="hero-credentials" data-editable="">B.Sc. &nbsp;·&nbsp; D.O. &nbsp;·&nbsp; M.Ed. Candidate</p><div>Osteopathic Practitioner, Integrative movement,&nbsp;</div><p></p>
+        <p class="hero-credentials" data-editable="">B.Sc. &nbsp;·&nbsp; D.O. &nbsp;·&nbsp; M.Ed. Candidate<br>Osteopathic Practitioner, Integrative Movement Educator, Neurodiversity Affirming &amp; Strength-Based Learning Specialist</p><div><br></div><div>Osteopathic Prac</div><p></p>
         <p class="hero-tagline" data-editable="">Manual osteopathy for all stages of life.<br>Specializing in brain trauma, neurological rehabilitation&nbsp; and neurodivergent brains and bodies.</p>
         <div class="hero-actions">
           <a href="#contact-form" class="btn-primary" data-editable="">Book a Session</a>
@@ -1095,7 +1176,7 @@ nav.nav-open .nav-menu {
       <div class="grid-2">
 
         <div class="meet-photo-wrap fade-up visible">
-          <img data-editable-image="" src="./assets/DA7B390D-3C88-4016-B627-005FC438FE6E.png" alt="Michelle Stevens, Osteopathic Practitioner" class="meet-photo" style="cursor: pointer;">
+          <img data-editable-image="" src="./assets/7393E6A1-85D2-4423-A12D-F5A907738643.png" alt="Michelle Stevens, Osteopathic Practitioner" class="meet-photo" style="cursor: pointer;">
         </div>
 
         <div class="meet-text fade-up visible">
@@ -1103,16 +1184,43 @@ nav.nav-open .nav-menu {
           <h2 data-editable="">A practitioner <em>who listens</em></h2>
           <div class="botanical-divider">✦ ✦ ✦</div>
           <p data-editable="">
-            Michelle Stevens is a registered osteopathic practitioner based in Kelowna, B.C., with a deep commitment to understanding how the nervous system shapes our lived experience. With a Bachelor of Science, a Diploma in Osteopathy, and ongoing graduate studies in Education, Michelle brings a uniquely integrated perspective to every session — one that honours the whole person, not just presenting symptoms.
+            Michelle Stevens is a registered osteopathic practitioner based in Kelowna, B.C., with a deep commitment to understanding how the nervous system shapes our lived experience. With a Bachelor of Science, a Diploma in Osteopathy, training in yoga and therapeutic movement, and ongoing graduate studies in education, Michelle brings a uniquely integrated perspective to every session — one that honours the whole person, not just presenting symptoms.
           </p>
           <p data-editable="">
-            Her practice is rooted in compassion, curiosity, and evidence-informed care. Whether you are navigating the aftermath of a brain injury, managing the complexities of neurodivergence, or simply seeking a deeper sense of ease in your body, Michelle provides a calm, unhurried space where healing can genuinely begin. Her approach invites the nervous system to settle — and in that settling, transformation becomes possible.
+            Her practice is rooted in compassion, curiosity, and evidence-informed care. Whether you are navigating the aftermath of a brain injury, managing the complexities of chronic pain, experiencing the world through a neurodivergent brain, or simply seeking a deeper sense of ease in your body, Michelle provides a calm, unhurried space where healing can genuinely begin. Her approach invites the nervous system to settle — and in that settling, transformation becomes possible.
           </p>
         </div>
 
       </div>
     </div>
-  </section>
+  </section><section id="background-education" data-zone="background-education" data-zone-label="Background &amp; Education" style="background-color: var(--color-warm-white); position: relative;">
+  <div class="container">
+    <div class="background-education-content" style="max-width: 780px; margin: 0 auto;">
+      <span class="section-label" data-editable="">About Michelle</span>
+      <h2 data-editable="" style="margin-bottom: var(--space-md);">Background and Education</h2>
+      <p data-editable="" style="margin-bottom: var(--space-sm);">Michelle is originally from Montreal, where she worked for 20 years as a yoga teacher, Pilates instructor and osteopathic practitioner. The love of movement and meditative practice formed the foundation of her work as an osteopath where she developed a clinical approach rooted in careful listening and whole-body care.</p>
+      <p data-editable="" style="margin-bottom: var(--space-sm);">Michelle holds a Bachelor of Science from McGill University and a Diploma in Osteopathy (D.O.) from the Collége d’Études Ostéopathiques (C.E.O.), one of the most rigorous osteopathic programs in Canada. The program aligns with World Health Organization standards and included over 4,200 hours of academic and clinical instruction, along with more than 1,000 hours of supervised clinical training.<br></p>
+      <p data-editable="" style="margin-bottom: var(--space-sm);">Her graduate-level research focused on brain trauma, with particular attention to rehabilitation after stroke. This work deepened her understanding of neurological injury, recovery, and the remarkable adaptability of the human body.</p>
+      <p data-editable="">Michelle continues to pursue advanced post-graduate education in cranial osteopathy, concussion care, burnout recovery, trauma, and psycho-neuro-immuno-endocrinology. She is committed to ongoing learning that strengthens her clinical reasoning and refines her hands-on skills.</p><div><br></div><div><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">In addition to her osteopathic education, Michelle is &nbsp;completing graduate-level studies in education to better understand neurodiversity and learning. This training informs her osteopathic approach through a deep appreciation of how neurotype influences physiology, sensory processing, pacing, goal-setting, and the therapeutic process itself. &nbsp;</p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);"><br></p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">She loves supporting fellow neurodivergent homeschooling families create neuro-affirming plans for both &nbsp;learning and life.</p><br data-cke-eol="1" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);"></div><p></p>
+    </div>
+  </div>
+</section><section id="meet" data-zone="meet" data-zone-label="Meet Michelle" style="">
+  <div class="container grid-2">
+    <div class="meet-photo-wrap fade-up visible">
+      <img data-editable-image="" src="./assets/placeholder.jpg" alt="Michelle Stevens portrait" class="meet-photo" style="cursor: pointer;">
+    </div>
+    <div class="meet-text fade-up visible">
+      <span class="section-label" data-editable="">Meet Michelle Stevens</span>
+      <h2 data-editable="">Your Partner in Holistic Wellness</h2>
+      <p data-editable="">Michelle Stevens is a dedicated Osteopathic Practitioner, Integrative Movement Educator, and Neurodiversity Affirming &amp; Strength-Based Learning Specialist with a passion for helping individuals achieve optimal health and well-being. She brings a unique, multifaceted approach to her practice, integrating her extensive knowledge in manual osteopathy with insights from education and neurological development.</p>
+      <p data-editable="">With a background that includes a B.Sc. and a D.O., Michelle is currently pursuing her M.Ed., deepening her understanding of how the brain and body learn and heal. She is committed to providing compassionate, client-centered care for all ages, offering a space where every individual feels seen, heard, and supported on their journey to wellness.</p>
+      <p data-editable="">She loves to support clients through a holistic lens, understanding that true wellness encompasses physical, mental, and emotional balance. Her goal is to empower you with the tools and understanding to navigate your health journey with confidence.</p>
+      <div style="margin-top: var(--space-md);">
+        <a href="#educational-consulting" class="btn-primary" data-editable="">Learn more about her educational consultant work</a>
+      </div>
+    </div>
+  </div>
+</section>
 
   <!-- ─── 3. Neurological Attunement First ─── -->
   <section id="neuro" data-zone="neuro" data-zone-label="Neurological Attunement">
@@ -1120,9 +1228,7 @@ nav.nav-open .nav-menu {
       <span class="section-label">Philosophy</span>
       <h2 data-editable="">Neurological attunement,<br>first.</h2>
       <div class="neuro-divider"></div>
-      <p data-editable="">
-        Before the body can heal, the nervous system must feel safe. Michelle's practice begins with neurological attunement — a careful, respectful process of meeting each client's system exactly where it is. By tuning into the subtle rhythms of the craniosacral system and the patterns held within connective tissue, she creates the conditions for genuine regulation to emerge. This isn't about doing more. It's about listening more deeply, so that the body's own intelligence can lead the way toward recovery and resilience.
-      </p>
+      <p data-editable=""><br></p><div><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-style: normal; font-size: 19px;"><span style="font-family: brandon-grot-w01-light, sans-serif;">Our nervous system shapes how we experience pain, recover from injury, and respond to treatment. When it is overwhelmed, healing becomes harder. When it is supported and regulated, the body adapts more effectively.</span></p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-style: normal; font-size: 19px;"><span style="color: rgba(255, 255, 255, 0.72); font-family: var(--font-display); font-size: clamp(1rem, 1.8vw, 1.15rem); font-style: italic;">Michelle's practice begins with neurological attunement — a careful, respectful process of meeting each client's system exactly where it is.&nbsp;&nbsp;</span><span style="font-family: brandon-grot-w01-light, sans-serif;">My approach is to work with the nervous system, &nbsp;not against it.&nbsp;&nbsp;</span><span style="color: rgba(255, 255, 255, 0.72); font-family: var(--font-display); font-size: clamp(1rem, 1.8vw, 1.15rem); font-style: italic;">This isn't about doing more. It's about listening more deeply, so that the body's own intelligence can lead the way toward recovery and resilience.</span><span style="font-family: brandon-grot-w01-light, sans-serif;">&nbsp;</span></p><br data-cke-eol="1" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-style: normal; text-align: start;"></div><p></p>
     </div>
   </section>
 
@@ -1138,25 +1244,25 @@ nav.nav-open .nav-menu {
         <div class="focus-card fade-up visible">
           <div class="focus-number">01</div>
           <h3 data-editable="">Brain Trauma &amp; Concussion</h3>
-          <p data-editable="">Osteopathic care for post-concussion syndrome, traumatic brain injury, and the lasting effects of neurological disruption on the whole body.</p>
+          <p data-editable=""></p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">I developed a deep respect for the brain during my graduate research, which focused on rehabilitation post stroke. My post-graduate training has continued to deepen that foundation through advanced study in concussion, trauma, burnout, and psycho-neuro-immuno-endocrinology. I understand the brain not as an isolated organ, but as part of an integrated system influencing hormonal balance, circulation, autonomic and emotional regulation, immune function, cognition, and whole-body resilience.</p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">​</p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">Treatment is careful and precise, supporting neurological recovery in a way that respects the nervous system’s sensitivity while strengthening its capacity over time.</p><p></p>
         </div>
 
         <div class="focus-card fade-up visible">
           <div class="focus-number">02</div>
-          <h3 data-editable="">Neurodivergent Support</h3>
-          <p data-editable="">Sensitive, individualized care for clients with ADHD, autism spectrum conditions, dyslexia, and related neurological differences — honouring each person's unique system.</p>
+          <h3 data-editable="">Neurodivergent- Affirming Approaches</h3>
+          <p data-editable=""></p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">Neurodiversity-affirming care begins with understanding neurotype &nbsp;including sensory needs, cognitive differences, motivation, pacing, and goal setting. Different types of brains shape different types of bodies, influencing muscle tone, autonomic regulation, fatigue patterns, and how treatment is experienced.</p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);"><br></p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">My sessions are adapted accordingly and may include movement, positional changes, rhythmic input, sound, or other regulatory supports to align with the individual’s nervous system. Care is collaborative, respectful, and responsive to each person’s needs.</p><p></p>
         </div>
 
         <div class="focus-card fade-up visible">
           <div class="focus-number">03</div>
-          <h3 data-editable="">Nervous System Regulation</h3>
-          <p data-editable="">Working with dysregulation, anxiety, and chronic stress patterns through craniosacral therapy and osteopathic mobilization to restore a felt sense of safety.</p>
+          <h3 data-editable=""><span style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); letter-spacing: normal;">Complex Pain &amp; Injury</span></h3>
+          <p data-editable=""></p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);"><br></p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);"><br></p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">I work with individuals experiencing persistent or layered pain presentations, including migraine, post-injury patterns, and cases involving neurophysiological complexity. Chronic pain often reflects an interplay between structural strain, nervous system sensitization, and body–mind interactions that evolve over time.</p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);"><br></p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">These cases benefit from thoughtful assessment and flexible, creative treatment strategies that adapt as the system responds. My approach remains steady and whole-body focused, supporting regulation while addressing the mechanical contributors to pain.</p><p></p>
         </div>
 
         <div class="focus-card fade-up visible">
           <div class="focus-number">04</div>
-          <h3 data-editable="">Chronic Pain &amp; Recovery</h3>
-          <p data-editable="">Addressing persistent musculoskeletal pain, post-surgical recovery, and complex injury patterns with gentle, whole-body osteopathic assessment and treatment.</p>
+          <h3 data-editable=""><span style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); letter-spacing: normal;"><span style="font-size: 20px;"><span style="font-family: futura-lt-w01-book, sans-serif;">Attuned &amp; Collaborative Care for Everyone</span></span></span></h3>
+          <p data-editable=""></p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">Osteopathic care is not reserved for complex diagnoses. Anyone can come for any reason, whether addressing pain, improving function, supporting recovery, or simply maintaining well-being.</p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);"><br></p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">I work relationally and collaboratively, adapting treatment to each person’s goals, pace, and comfort. My practice includes individuals &nbsp;from newborns to seniors, as well as families, athletes, pregnant women, and those navigating injury, stress, or transition.</p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);"><br></p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">Care does not require you to feel “complicated” to benefit. My role is to meet you where you are and support the body’s capacity to adapt, regulate, and move toward greater ease.</p><p></p>
         </div>
 
       </div>
@@ -1181,8 +1287,8 @@ nav.nav-open .nav-menu {
               <path d="M12 14c0-2.2-1.8-4-4-4s-4 1.8-4 4v10c0 6.6 5.4 12 12 12h4c4.4 0 8-3.6 8-8v-2"></path>
             </svg>
           </div>
-          <h3 data-editable="">Osteopathic Manual Therapy</h3>
-          <p data-editable="">Full-body osteopathic assessment and hands-on treatment addressing structural, visceral, and craniosacral imbalances. Sessions are individualized and deeply attentive.</p>
+          <h3 data-editable="">Sessions</h3>
+          <p data-editable="">In person sessions are available at the Okanagan location.<br><br>Consultations on self-care, movement and sensory strategies are available online.&nbsp;<br></p>
         </div>
 
         <div class="service-card fade-up visible">
@@ -1195,8 +1301,8 @@ nav.nav-open .nav-menu {
               <circle cx="20" cy="20" r="3"></circle>
             </svg>
           </div>
-          <h3 data-editable="">Craniosacral Therapy</h3>
-          <p data-editable="">A gentle, non-invasive approach that works with the rhythmic movement of cerebrospinal fluid to release restrictions in the craniosacral system — particularly supportive for neurological conditions.</p>
+          <h3 data-editable="">Cost and Insurance</h3>
+          <p data-editable="">Sessions are one hour<br>150$<br><br>Insurance receipts are available&nbsp;<br><br><br></p>
         </div>
 
         <div class="service-card fade-up visible">
@@ -1208,8 +1314,8 @@ nav.nav-open .nav-menu {
               <path d="M20 20C20 12 12 6 4 8c2 8 8 14 16 12z"></path>
             </svg>
           </div>
-          <h3 data-editable="">Holistic Wellness Consultation</h3>
-          <p data-editable="">An integrative consultation exploring the interplay between body, nervous system, environment, and lived experience — supporting clients in building sustainable pathways to wellbeing.</p>
+          <h3 data-editable="">Location</h3>
+          <p data-editable="">Details on the Okanagan to come early summer 2026<br><br></p>
         </div>
 
       </div>
@@ -1391,6 +1497,9 @@ nav.nav-open .nav-menu {
       window.location.href = `mailto:mstevensosteo@gmail.com?subject=${subject}&body=${body}`;
     }
   </script>
+
+
+
 
 
 
