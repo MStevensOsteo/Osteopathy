@@ -176,7 +176,7 @@
     .nav-cta {
       background: var(--color-charcoal);
       color: var(--color-cream) !important;
-      padding: 0.55rem 1.4rem;
+      padding: 0.55rem 1.4rem !important;
       border-radius: 100px;
       font-size: 0.78rem !important;
       transition: background 0.3s !important;
@@ -810,26 +810,260 @@
       letter-spacing: 12px;
     }
   </style>
-</head>
+<style id="__webby-nav-styles">/* ─── Navigation ─── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100; /* Main nav layer */
+  background: rgba(253, 250, 246, 0.95); /* More opaque background for fixed nav */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  box-shadow: 0 2px 24px rgba(58, 53, 48, 0.04); /* Subtle shadow always present */
+  padding: var(--space-sm) 0; /* Vertical padding for the fixed nav bar */
+}
+
+/* Inner container for max-width and horizontal padding */
+.nav-inner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-md); /* Horizontal padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-charcoal);
+  letter-spacing: 0.02em;
+  z-index: 9002; /* Ensure logo is above mobile menu content */
+  position: relative; /* Needed for z-index to apply */
+}
+
+.nav-logo span {
+  font-style: italic;
+  color: var(--color-lilac-mid);
+}
+
+/* Hamburger toggle button (mobile-only by default) */
+.nav-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 24px; /* Sufficient height for 3 lines */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 9002; /* Ensure toggle is above mobile menu content */
+  position: relative; /* Needed for z-index to apply */
+  outline-offset: 4px; /* For accessibility */
+}
+
+.nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px; /* Line thickness */
+  background: var(--color-charcoal);
+  border-radius: 2px;
+  transition: var(--transition);
+  transform-origin: center;
+}
+
+/* Hamburger animation when menu is open */
+nav.nav-open .nav-toggle span:nth-child(1) {
+  transform: translateY(10px) rotate(45deg);
+}
+nav.nav-open .nav-toggle span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+nav.nav-open .nav-toggle span:nth-child(3) {
+  transform: translateY(-12px) rotate(-45deg);
+}
+
+/* Mobile full-screen menu overlay */
+.nav-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-warm-white); /* Solid background to cover page content */
+  z-index: 9001; /* High z-index to cover all other content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg); /* Space between the links list and CTA button */
+
+  visibility: hidden; /* Hidden by default for smooth transition */
+  opacity: 0;
+  transition: opacity var(--transition), visibility var(--transition);
+}
+
+nav.nav-open .nav-menu {
+  visibility: visible;
+  opacity: 1;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md); /* Space between individual links in mobile menu */
+  padding: 0;
+  margin: 0; /* Reset margin */
+}
+
+.nav-links a {
+  font-family: var(--font-body);
+  font-size: 1.1rem; /* Larger font size for better tap targets on mobile */
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-charcoal);
+  transition: color 0.3s;
+  padding: var(--space-xs) 0; /* Add vertical padding for easier tapping */
+  outline-offset: 4px; /* For accessibility */
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+  color: var(--color-lilac-mid);
+}
+
+/* CTA button within the mobile menu */
+.nav-cta {
+  background: var(--color-charcoal);
+  color: var(--color-cream) !important;
+  padding: 0.8rem 2rem; /* Adjusted padding for mobile CTA */
+  border-radius: 100px;
+  font-size: 0.9rem !important; /* Adjusted font size for mobile CTA */
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.3s !important, color 0.3s !important;
+  display: inline-block; /* Allows padding to apply correctly */
+  outline-offset: 4px; /* For accessibility */
+}
+
+.nav-cta:hover,
+.nav-cta:focus {
+  background: var(--color-lilac-mid) !important;
+  color: #fff !important; /* Specific white color for hover */
+}
+
+/* Desktop Styles */
+@media (min-width: 768px) {
+  .nav-toggle {
+    display: none; /* Hide hamburger on desktop */
+  }
+
+  .nav-menu {
+    position: static; /* No longer fixed overlay */
+    background: none; /* No background */
+    z-index: auto; /* Reset z-index */
+    visibility: visible; /* Always visible */
+    opacity: 1;
+    flex-direction: row; /* Horizontal layout for desktop */
+    gap: var(--space-md); /* Space between elements in desktop nav (links and CTA) */
+    margin-left: auto; /* Push nav-menu to the right */
+  }
+
+  .nav-links {
+    flex-direction: row; /* Horizontal links */
+    gap: var(--space-md); /* Standard desktop link gap */
+    margin-right: var(--space-sm); /* Space between links and CTA button */
+  }
+
+  .nav-links a {
+    font-size: 0.82rem; /* Revert to smaller desktop font size */
+    font-weight: 400;
+    color: var(--color-stone); /* Revert to desktop color */
+    padding: 0; /* Remove extra padding from mobile */
+  }
+
+  .nav-cta {
+    padding: 0.55rem 1.4rem; /* Revert to original desktop padding */
+    font-size: 0.78rem !important; /* Revert to original desktop font size */
+  }
+}</style></head>
 <body style="">
 
   <!-- ─── Navigation ─── -->
-  <nav id="main-nav" aria-label="Main navigation" style="box-shadow: rgba(58, 53, 48, 0.08) 0px 2px 24px;">
+  <nav id="main-nav" aria-label="Main navigation" style="box-shadow: none;">
+  <div class="nav-inner container">
     <a href="#hero" class="nav-logo">Michelle <span>Stevens</span></a>
-    <ul class="nav-links">
-      <li><a href="#meet">About</a></li>
-      <li><a href="#focus">Focus</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#testimonials">Testimonials</a></li>
-      <li><a href="#contact-form" class="nav-cta">Book a Session</a></li>
-    </ul>
-    <button class="nav-toggle" aria-label="Toggle menu" onclick="document.body.classList.toggle('nav-open')">
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
-  </nav>
+    <div class="nav-menu">
+      <ul class="nav-links">
+        <li><a href="#meet">About</a></li>
+        <li><a href="#focus">Focus</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact-form" class="nav-cta">Book a Session</a></li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    (function() {
+      const nav = document.getElementById('main-nav');
+      const navToggle = nav.querySelector('.nav-toggle');
+      const navMenu = nav.querySelector('.nav-menu');
+      const navLinks = nav.querySelectorAll('.nav-links a');
+      const breakpoint = 768; // Needs to match CSS media query
+
+      function toggleMenu() {
+        const isOpen = nav.classList.toggle('nav-open');
+        navToggle.setAttribute('aria-expanded', isOpen);
+        // Prevent body scrolling when menu is open
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      }
+
+      function closeMenu() {
+        if (nav.classList.contains('nav-open')) {
+          nav.classList.remove('nav-open');
+          navToggle.setAttribute('aria-expanded', false);
+          document.body.style.overflow = '';
+        }
+      }
+
+      // Toggle menu on hamburger click
+      navToggle.addEventListener('click', toggleMenu);
+
+      // Close menu when a navigation link is clicked
+      navLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Close menu on window resize to desktop width
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          if (window.innerWidth >= breakpoint) {
+            closeMenu();
+          }
+        }, 100); // Debounce resize event for performance
+      });
+    })();
+  </script>
+</nav>
 
   <!-- ─── 1. Hero ─── -->
-  <section id="hero" data-zone="hero" data-zone-label="Hero">
+  <section id="hero" data-zone="hero" data-zone-label="Hero" style="">
 
     <img data-editable-image="" src="./assets/pexels-brett-sayles-1196310.jpg" alt="Lilac blossoms in soft morning light" class="hero-img" style="cursor: pointer;">
     <div class="hero-bg"></div>
@@ -838,12 +1072,9 @@
       <div class="hero-content">
         <span class="hero-eyebrow" data-editable="">Osteopathic Practice — Kelowna, B.C.</span>
         <h1 class="hero-title" data-editable="">
-          Michelle <em>Stevens</em>
-        </h1>
-        <p class="hero-credentials" data-editable="">B.Sc. &nbsp;·&nbsp; D.O. &nbsp;·&nbsp; M.Ed. Candidate</p>
-        <p class="hero-tagline" data-editable="">
-          Specializing in brain trauma and neurological rehabilitation for neurodivergent clients.
-        </p>
+          Michelle <em>Stevens&nbsp;</em></h1>
+        <p class="hero-credentials" data-editable="">B.Sc. &nbsp;·&nbsp; D.O. &nbsp;·&nbsp; M.Ed. Candidate</p><div>Osteopathic Practitioner, Integrative movement,&nbsp;</div><p></p>
+        <p class="hero-tagline" data-editable="">Manual osteopathy for all stages of life.<br>Specializing in brain trauma, neurological rehabilitation&nbsp; and neurodivergent brains and bodies.</p>
         <div class="hero-actions">
           <a href="#contact-form" class="btn-primary" data-editable="">Book a Session</a>
           <a href="#meet" class="btn-outline" data-editable="">Meet Michelle</a>
@@ -874,7 +1105,7 @@
           <p data-editable="">
             Michelle Stevens is a registered osteopathic practitioner based in Kelowna, B.C., with a deep commitment to understanding how the nervous system shapes our lived experience. With a Bachelor of Science, a Diploma in Osteopathy, and ongoing graduate studies in Education, Michelle brings a uniquely integrated perspective to every session — one that honours the whole person, not just presenting symptoms.
           </p>
-          <p data-editable="" style="margin-top: 1.2rem;">
+          <p data-editable="">
             Her practice is rooted in compassion, curiosity, and evidence-informed care. Whether you are navigating the aftermath of a brain injury, managing the complexities of neurodivergence, or simply seeking a deeper sense of ease in your body, Michelle provides a calm, unhurried space where healing can genuinely begin. Her approach invites the nervous system to settle — and in that settling, transformation becomes possible.
           </p>
         </div>
@@ -935,13 +1166,13 @@
   <!-- ─── 5. Services ─── -->
   <section id="services" data-zone="services" data-zone-label="Services" style="position: relative;">
     <div class="container">
-      <div class="services-header fade-up">
+      <div class="services-header fade-up visible">
         <span class="section-label">What I Offer</span>
         <h2 data-editable="">Services</h2>
       </div>
       <div class="grid-3">
 
-        <div class="service-card fade-up">
+        <div class="service-card fade-up visible">
           <div class="service-icon">
             <!-- Hands icon -->
             <svg viewBox="0 0 40 40" fill="none" stroke="var(--color-lilac-mid)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -954,7 +1185,7 @@
           <p data-editable="">Full-body osteopathic assessment and hands-on treatment addressing structural, visceral, and craniosacral imbalances. Sessions are individualized and deeply attentive.</p>
         </div>
 
-        <div class="service-card fade-up">
+        <div class="service-card fade-up visible">
           <div class="service-icon">
             <!-- Brain/wave icon -->
             <svg viewBox="0 0 40 40" fill="none" stroke="var(--color-sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -968,7 +1199,7 @@
           <p data-editable="">A gentle, non-invasive approach that works with the rhythmic movement of cerebrospinal fluid to release restrictions in the craniosacral system — particularly supportive for neurological conditions.</p>
         </div>
 
-        <div class="service-card fade-up">
+        <div class="service-card fade-up visible">
           <div class="service-icon">
             <!-- Leaf/wellness icon -->
             <svg viewBox="0 0 40 40" fill="none" stroke="var(--color-lilac-mid)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -988,13 +1219,13 @@
   <!-- ─── 6. Testimonials ─── -->
   <section id="testimonials" data-zone="testimonials" data-zone-label="Testimonials" style="position: relative;">
     <div class="container">
-      <div class="testimonials-header fade-up">
+      <div class="testimonials-header fade-up visible">
         <span class="section-label">Client Experiences</span>
         <h2 data-editable="">Words from those I've worked with</h2>
       </div>
       <div class="grid-3">
 
-        <div class="testimonial-card fade-up">
+        <div class="testimonial-card fade-up visible">
           <div class="testimonial-stars">★★★★★</div>
           <p class="testimonial-text" data-editable="">
             After years of managing post-concussion symptoms with little relief, Michelle's work has been genuinely life-changing. She has a rare gift for listening — not just with her ears, but with her hands. I left each session feeling more at home in my own body.
@@ -1002,7 +1233,7 @@
           <span class="testimonial-author" data-editable="">— Sarah M., Kelowna</span>
         </div>
 
-        <div class="testimonial-card fade-up">
+        <div class="testimonial-card fade-up visible">
           <div class="testimonial-stars">★★★★★</div>
           <p class="testimonial-text" data-editable="">
             As someone with ADHD, I've always found conventional healthcare overwhelming. Michelle's practice is completely different — calm, unhurried, and completely attuned to how my nervous system works. I finally feel like my neurodivergence is understood, not just managed.
@@ -1010,7 +1241,7 @@
           <span class="testimonial-author" data-editable="">— James T., Kelowna</span>
         </div>
 
-        <div class="testimonial-card fade-up">
+        <div class="testimonial-card fade-up visible">
           <div class="testimonial-stars">★★★★★</div>
           <p class="testimonial-text" data-editable="">
             Michelle has a quality of presence that is rare in any healing context. Her understanding of the nervous system and her ability to work with it so gently has helped me recover from a traumatic brain injury in ways I didn't believe were possible. I am deeply grateful.
@@ -1025,13 +1256,13 @@
   <!-- ─── 7. Contact Form ─── -->
   <section id="contact-form" data-zone="contact-form" data-zone-label="Contact Form" style="position: relative;">
     <div class="container">
-      <div class="contact-form-header fade-up">
+      <div class="contact-form-header fade-up visible">
         <span class="section-label">Get in Touch</span>
         <h2 data-editable="">Begin your journey</h2>
         <p style="margin: 0.75rem auto 0; text-align:center;" data-editable="">I'd love to hear from you. Share a little about what's brought you here and I'll be in touch within two business days.</p>
       </div>
 
-      <div class="form-wrap fade-up">
+      <div class="form-wrap fade-up visible">
         <form action="mailto:mstevensosteo@gmail.com" method="post" enctype="text/plain" onsubmit="return handleFormSubmit(event)">
           <div class="form-row">
             <div class="form-group">
@@ -1063,12 +1294,12 @@
   <section id="contact" data-zone="contact" data-zone-label="Contact Information" style="position: relative;">
     <div class="container">
       <div class="contact-grid">
-        <div class="contact-left fade-up">
+        <div class="contact-left fade-up visible">
           <span class="section-label" style="color:var(--color-lilac);">Find Me</span>
           <h2 data-editable="">Let's connect</h2>
           <p data-editable="">Based in Kelowna, B.C., I welcome clients from across the Okanagan and beyond. Reach out to discuss how osteopathic care might support your health journey.</p>
         </div>
-        <div class="contact-details fade-up">
+        <div class="contact-details fade-up visible">
 
           <div class="contact-item">
             <div class="contact-item-icon">
@@ -1160,6 +1391,7 @@
       window.location.href = `mailto:mstevensosteo@gmail.com?subject=${subject}&body=${body}`;
     }
   </script>
+
 
 
 
