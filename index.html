@@ -870,7 +870,6 @@ a { color: inherit; text-decoration: none; }
 /* ─── Navigation ─── */
 nav {
   position: fixed;
-  top: 44px; /* Moved from inline style in HTML, assuming for desktop */
   left: 0;
   right: 0;
   z-index: 100; /* Main nav layer */
@@ -1083,7 +1082,7 @@ nav.nav-open .nav-menu {
 <body style="">
 
   <!-- ─── Navigation ─── -->
-  <nav id="main-nav" aria-label="Main navigation" style="" class="">
+  <nav id="main-nav" aria-label="Main navigation" style="box-shadow: none;" class="">
   <div class="nav-inner container">
     <a href="#hero" class="nav-logo">Michelle <span>Stevens</span></a>
     <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
