@@ -1078,7 +1078,95 @@ nav.nav-open .nav-menu {
   .nav-inner {
     padding: 0; /* Remove extra padding from inner container on mobile, as nav itself provides it */
   }
-}</style><meta name="keywords" content="Osteopathy, Osteopathic Practitioner, Concussion, Kelwona, Neuro-affirming"><style id="__webby-section-focus-styles"></style></head>
+}</style><meta name="keywords" content="Osteopathy, Osteopathic Practitioner, Concussion, Kelwona, Neuro-affirming"><style id="__webby-section-focus-styles">/* ─── Layout Utilities (Modified) ─── */
+.grid-4 {
+  display: grid;
+  grid-template-columns: 1fr; /* Default: 1 column for small screens (mobile/tablet) */
+  gap: var(--space-md);
+}
+
+@media (min-width: 768px) { /* Tablet and up */
+  .grid-4 { grid-template-columns: repeat(2, 1fr); } /* 2 columns */
+}
+
+@media (min-width: 1024px) { /* Desktop/Full width monitors */
+  .grid-4 { grid-template-columns: repeat(4, 1fr); } /* 4 columns */
+}
+
+/* ─── Areas of Focus ─── */
+#focus {
+  background: var(--color-warm-white);
+}
+
+.focus-header {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.focus-header h2 { margin-bottom: var(--space-sm); }
+
+.focus-card {
+  background: var(--color-cream);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.focus-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--color-lilac), var(--color-sage));
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.focus-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(58,53,48,0.08); }
+.focus-card:hover::before { opacity: 1; }
+
+.focus-number {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--color-lilac-pale);
+  line-height: 1;
+  margin-bottom: var(--space-xs);
+}
+
+.focus-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: var(--space-xs);
+  color: var(--color-charcoal);
+}
+
+.focus-card p { font-size: 0.92rem; }</style><style id="__webby-section-background-education-styles">#background-education {
+  background-color: var(--color-warm-white);
+  position: relative;
+}
+
+.background-education-content {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+#background-education h2 {
+  margin-bottom: var(--space-md);
+}
+
+#background-education p + p {
+  margin-top: var(--space-sm);
+}
+
+.background-education-actions {
+  text-align: center;
+  margin-top: var(--space-lg); /* Add spacing above the button */
+}</style></head>
 <body style="">
 
   <!-- ─── Navigation ─── -->
@@ -1153,8 +1241,8 @@ nav.nav-open .nav-menu {
         <span class="hero-eyebrow" data-editable="">Osteopathic Practice — Kelowna, B.C.</span>
         <h1 class="hero-title" data-editable="">
           Michelle <em>Stevens&nbsp;</em></h1>
-        <p class="hero-credentials" data-editable="">B.Sc. &nbsp;·&nbsp; D.O. &nbsp;·&nbsp; M.Ed. Candidate<br><br>Osteopathic Practitioner, Integrative Movement Educator, Neurodiversity Affirming &amp; Strength-Based Learning Specialist</p>
-        <p class="hero-tagline" data-editable="">Manual osteopathy for all stages of life.<br>Specializing in brain trauma, neurological rehabilitation&nbsp; and neurodivergent brains and bodies.</p>
+        <p class="hero-credentials" data-editable="">B.Sc. &nbsp;·&nbsp; D.O. &nbsp;·&nbsp; M.Ed. Candidate<br>Osteopathic Practitioner, Integrative Movement Educator, Neurodiversity Affirming &amp; Strength-Based Learning Specialist</p>
+        <p class="hero-tagline" data-editable=""><br></p>
         <div class="hero-actions">
           <a href="#contact-form" class="btn-primary" data-editable="">Book a Session</a>
           <a href="#meet" class="btn-outline" data-editable="">Meet Michelle</a>
@@ -1192,30 +1280,19 @@ nav.nav-open .nav-menu {
 
       </div>
     </div>
-  </section><section id="background-education" data-zone="background-education" data-zone-label="Background &amp; Education" style="background-color: var(--color-warm-white); position: relative;">
+  </section><section id="background-education" data-zone="background-education" data-zone-label="Background &amp; Education">
   <div class="container">
-    <div class="background-education-content" style="max-width: 780px; margin: 0 auto;">
+    <div class="background-education-content">
       <span class="section-label" data-editable="">About Michelle</span>
-      <h2 data-editable="" style="margin-bottom: var(--space-md);">Background and Education</h2>
-      <p data-editable="" style="margin-bottom: var(--space-sm);">Michelle is originally from Montreal, where she worked for 20 years as a yoga teacher, Pilates instructor and osteopathic practitioner. The love of movement and meditative practice formed the foundation of her work as an osteopath where she developed a clinical approach rooted in careful listening and whole-body care.</p>
-      <p data-editable="" style="margin-bottom: var(--space-sm);">Michelle holds a Bachelor of Science from McGill University and a Diploma in Osteopathy (D.O.) from the Collége d’Études Ostéopathiques (C.E.O.), one of the most rigorous osteopathic programs in Canada. The program aligns with World Health Organization standards and included over 4,200 hours of academic and clinical instruction, along with more than 1,000 hours of supervised clinical training.<br></p>
-      <p data-editable="" style="margin-bottom: var(--space-sm);">Her graduate-level research focused on brain trauma, with particular attention to rehabilitation after stroke. This work deepened her understanding of neurological injury, recovery, and the remarkable adaptability of the human body.</p>
-      <p data-editable="">Michelle continues to pursue advanced post-graduate education in cranial osteopathy, concussion care, burnout recovery, trauma, and psycho-neuro-immuno-endocrinology. She is committed to ongoing learning that strengthens her clinical reasoning and refines her hands-on skills.</p><div><br></div><div><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">In addition to her osteopathic education, Michelle is &nbsp;completing graduate-level studies in education to better understand neurodiversity and learning. This training informs her osteopathic approach through a deep appreciation of how neurotype influences physiology, sensory processing, pacing, goal-setting, and the therapeutic process itself. &nbsp;</p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);"><br></p><p class="font_8" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">She loves supporting fellow neurodivergent homeschooling families create neuro-affirming plans for both &nbsp;learning and life.</p><br data-cke-eol="1" style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);"></div><p></p>
-    </div>
-  </div>
-</section><section id="meet" data-zone="meet" data-zone-label="Meet Michelle" style="">
-  <div class="container grid-2">
-    <div class="meet-photo-wrap fade-up visible">
-      <img data-editable-image="" src="./assets/placeholder.jpg" alt="Michelle Stevens portrait" class="meet-photo" style="cursor: pointer;">
-    </div>
-    <div class="meet-text fade-up visible">
-      <span class="section-label" data-editable="">Meet Michelle Stevens</span>
-      <h2 data-editable="">Your Partner in Holistic Wellness</h2>
-      <p data-editable="">Michelle Stevens is a dedicated Osteopathic Practitioner, Integrative Movement Educator, and Neurodiversity Affirming &amp; Strength-Based Learning Specialist with a passion for helping individuals achieve optimal health and well-being. She brings a unique, multifaceted approach to her practice, integrating her extensive knowledge in manual osteopathy with insights from education and neurological development.</p>
-      <p data-editable="">With a background that includes a B.Sc. and a D.O., Michelle is currently pursuing her M.Ed., deepening her understanding of how the brain and body learn and heal. She is committed to providing compassionate, client-centered care for all ages, offering a space where every individual feels seen, heard, and supported on their journey to wellness.</p>
-      <p data-editable="">She loves to support clients through a holistic lens, understanding that true wellness encompasses physical, mental, and emotional balance. Her goal is to empower you with the tools and understanding to navigate your health journey with confidence.</p>
-      <div style="margin-top: var(--space-md);">
-        <a href="#educational-consulting" class="btn-primary" data-editable="">Learn more about her educational consultant work</a>
+      <h2 data-editable="">Background and Education</h2>
+      <p data-editable="">Michelle is originally from Montreal, where she worked for 20 years as a yoga teacher, Pilates instructor and osteopathic practitioner. The love of movement and meditative practice formed the foundation of her work where she developed a clinical approach rooted in careful listening and whole-body care.</p>
+      <p data-editable="">Michelle holds a Bachelor of Science from McGill University and a Diploma in Osteopathy (D.O.) from the Collége d’Études Ostéopathiques (C.E.O.), one of the most rigorous osteopathic programs in Canada. The program aligns with World Health Organization standards and included over 4,200 hours of academic and clinical instruction, along with more than 1,000 hours of supervised clinical training.</p>
+      <p data-editable="">Her graduate-level research focused on brain trauma, with particular attention to rehabilitation after stroke. This work deepened her understanding of neurological injury, recovery, and the remarkable adaptability of the human body.</p>
+      <p data-editable="">Michelle continues to pursue advanced post-graduate education in cranial osteopathy, concussion care, burnout recovery, trauma, and psycho-neuro-immuno-endocrinology. She is committed to ongoing learning that strengthens her clinical reasoning and refines her hands-on skills.</p>
+      <p data-editable="">In addition to her osteopathic education, Michelle is &nbsp;completing graduate-level studies in education to better understand neurodiversity and learning. This training informs her osteopathic approach through a deep appreciation of how neurotype influences physiology, sensory processing, pacing, goal-setting, and the therapeutic process itself. &nbsp;</p>
+      <p data-editable="">She loves supporting fellow neurodivergent homeschooling families create neuro-affirming plans for both &nbsp;learning and life.</p>
+      <div class="background-education-actions">
+        <a href="#contact-form" class="btn-primary" data-editable="">Contact Michelle</a>
       </div>
     </div>
   </div>
@@ -1227,7 +1304,7 @@ nav.nav-open .nav-menu {
       <span class="section-label">Philosophy</span>
       <h2 data-editable="">Neurological attunement,<br>first.</h2>
       <div class="neuro-divider"></div>
-      <p data-editable="">Our nervous system shapes how we experience pain, recover from injury, and respond to treatment. When it is overwhelmed, healing becomes harder. When it is supported and regulated, the body adapts more effectively.<br>Michelle's practice begins with neurological attunement — a careful, respectful process of meeting each client's system exactly where it is.<br>This isn't about doing more. It's about listening more deeply, so that the body's own intelligence can lead the way toward recovery and resilience.</p>
+      <p data-editable="">Our nervous system shapes how we experience pain, recover from injury, and respond to treatment. When it is overwhelmed, healing becomes harder. When it is supported and regulated, the body adapts more effectively.<br><br>Michelle's practice begins with neurological attunement — a careful, respectful process of meeting each client's system exactly where it is.<br><br>This isn't about doing more. It's about listening more deeply, so that the body's own intelligence can lead the way toward recovery and resilience.</p>
     </div>
   </section>
 
@@ -1243,25 +1320,25 @@ nav.nav-open .nav-menu {
         <div class="focus-card fade-up visible">
           <div class="focus-number">01</div>
           <h3 data-editable="">Brain Trauma &amp; Concussion</h3>
-          <p data-editable="">I developed a deep respect for the brain during my graduate research, which focused on rehabilitation post stroke. My post-graduate training has continued to deepen that foundation through advanced study in concussion, trauma, burnout, and psycho-neuro-immuno-endocrinology. I understand the brain not as an isolated organ, but as part of an integrated system influencing hormonal balance, circulation, autonomic and emotional regulation, immune function, cognition, and whole-body resilience.<br><br>Treatment is careful and precise, supporting neurological recovery in a way that respects the nervous system’s sensitivity while strengthening its capacity over time.</p>
+          <p data-editable=""><br>I developed a deep respect for the brain during my graduate research, which focused on rehabilitation post stroke. My post-graduate training has continued to deepen that foundation through advanced study in concussion, trauma, burnout, and psycho-neuro-immuno-endocrinology. I understand the brain not as an isolated organ, but as part of an integrated system influencing hormonal balance, circulation, autonomic and emotional regulation, immune function, cognition, and whole-body resilience.<br><br>Treatment is careful and precise, supporting neurological recovery in a way that respects the nervous system’s sensitivity while strengthening its capacity over time.</p>
         </div>
 
         <div class="focus-card fade-up visible">
           <div class="focus-number">02</div>
           <h3 data-editable="">Neurodivergent- Affirming Approaches</h3>
-          <p data-editable="">Neurodiversity-affirming care begins with understanding neurotype &nbsp;including sensory needs, cognitive differences, motivation, pacing, and goal setting. Different types of brains shape different types of bodies, influencing muscle tone, autonomic regulation, fatigue patterns, and how treatment is experienced.<br><br>My sessions are adapted accordingly and may include movement, positional changes, rhythmic input, sound, or other regulatory supports to align with the individual’s nervous system. Care is collaborative, respectful, and responsive to each person’s needs.</p>
+          <p data-editable=""><br>Neurodiversity-affirming care begins with understanding neurotype &nbsp;including sensory needs, cognitive differences, motivation, pacing, and goal setting. Different types of brains shape different types of bodies, influencing muscle tone, autonomic regulation, fatigue patterns, and how treatment is experienced.<br><br>My sessions are adapted accordingly and may include movement, positional changes, rhythmic input, sound, or other regulatory supports to align with the individual’s nervous system. Care is collaborative, respectful, and responsive to each person’s needs.</p>
         </div>
 
         <div class="focus-card fade-up visible">
           <div class="focus-number">03</div>
           <h3 data-editable="">Complex Pain &amp; Injury</h3>
-          <p data-editable=""><br>I work with individuals experiencing persistent or layered pain presentations, including migraine, post-injury patterns, and cases involving neurophysiological complexity. Chronic pain often reflects an interplay between structural strain, nervous system sensitization, and body–mind interactions that evolve over time.<br><br>These cases benefit from thoughtful assessment and flexible, creative treatment strategies that adapt as the system responds. My approach remains steady and whole-body focused, supporting regulation while addressing the mechanical contributors to pain.</p>
+          <p data-editable=""><br><br>I work with individuals experiencing persistent or layered pain presentations, including migraine, post-injury patterns, and cases involving neurophysiological complexity. Chronic pain often reflects an interplay between structural strain, nervous system sensitization, and body–mind interactions that evolve over time.<br><br>These cases benefit from thoughtful assessment and flexible, creative treatment strategies that adapt as the system responds. My approach remains steady and whole-body focused, supporting regulation while addressing the mechanical contributors to pain.</p>
         </div>
 
         <div class="focus-card fade-up visible">
           <div class="focus-number">04</div>
-          <h3 data-editable="">Attuned &amp; Collaborative Care for Everyone</h3>
-          <p data-editable="">Osteopathic care is not reserved for complex diagnoses. Anyone can come for any reason, whether addressing pain, improving function, supporting recovery, or simply maintaining well-being.<br><br>I work relationally and collaboratively, adapting treatment to each person’s goals, pace, and comfort. My practice includes individuals &nbsp;from newborns to seniors, as well as families, athletes, pregnant women, and those navigating injury, stress, or transition.<br><br>Care does not require you to feel “complicated” to benefit. My role is to meet you where you are and support the body’s capacity to adapt, regulate, and move toward greater ease.</p>
+          <h3 data-editable="">Attuned &amp; Care for Everyone</h3>
+          <p data-editable=""><br>Osteopathic care is not reserved for complex diagnoses. Anyone can come for any reason, whether addressing pain, improving function, supporting recovery, or simply maintaining well-being.<br><br>I work relationally and collaboratively, adapting treatment to each person’s goals, pace, and comfort. My practice includes individuals &nbsp;from newborns to seniors, as well as families, athletes, pregnant women, and those navigating injury, stress, or transition.<br><br>Care does not require you to feel “complicated” to benefit. My role is to meet you where you are and support the body’s capacity to adapt, regulate, and move toward greater ease.</p>
         </div>
 
       </div>
